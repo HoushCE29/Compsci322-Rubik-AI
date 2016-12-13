@@ -83,7 +83,9 @@ public class RubiksCube implements Cube, Cloneable{
 	private Color[][] back = Color.YELLOW.face();
 	private Color[][] bottom = Color.BLUE.face();
 	private Color[][] front = Color.WHITE.face();
-	
+	private RubiksCube previousState1;
+	private RubiksCube previousState2;
+	private int previousMoveID=-1;
 	//Easily accessible solved cube
 	public static final RubiksCube SOLVED_CUBE = new RubiksCube(Color.WHITE.face(), 
 			Color.GREEN.face(), Color.BLUE.face(), Color.ORANGE.face(), Color.RED.face(),
@@ -116,6 +118,8 @@ public class RubiksCube implements Cube, Cloneable{
 				rotateFront(rotate);
 				break;
 			}
+			previousState1=null;
+			previousState2=null;
 		}
 	}
 	
@@ -173,6 +177,14 @@ public class RubiksCube implements Cube, Cloneable{
 		return null;
 	}
 	
+	public int getPreviousMoveID() {
+		return previousMoveID;
+	}
+
+	public void setPreviousMoveID(int previousMoveID) {
+		this.previousMoveID = previousMoveID;
+	}
+
 	/**
 	 * Used to simplify all rotations, as all use this same algorithm.
 	 * @param face Face to be rotated
@@ -447,5 +459,52 @@ public class RubiksCube implements Cube, Cloneable{
 			}
 		}
 		return new RubiksCube(cFront, cTop, cBottom, cLeft, cRight, cBack);
+	}
+	public RubiksCube getPreviousState1(){
+		return previousState1;
+	}
+	public RubiksCube getPreviousState2(){
+		return previousState2;
+	}
+	public void move(int moveID){
+		previousState2=previousState1;
+		previousState1=this.clone();
+		switch(moveID){
+			case 1:this.rotateLeft(Rotation.CLOCK);break;//LRCW
+			case 2:this.rotateLeft(Rotation.COUNTER);break;//LRCCW
+			case 3:this.rotateRight(Rotation.CLOCK);break;//RRCW
+			case 4:this.rotateRight(Rotation.COUNTER);break;//RRCCW
+			case 5:this.rotateTop(Rotation.CLOCK);break;//TRCW
+			case 6:this.rotateTop(Rotation.COUNTER);break;//TRCCW
+			case 7:this.rotateBottom(Rotation.CLOCK);break;//BotRCW
+			case 8:this.rotateBottom(Rotation.COUNTER);break;//BotRCCW
+			case 9:this.rotateFront(Rotation.CLOCK);break;//FRCW
+			case 10:this.rotateFront(Rotation.COUNTER);break;//FRCCW
+			case 11:this.rotateBack(Rotation.CLOCK);break;//BackRCW
+			case 12:this.rotateBack(Rotation.COUNTER);break;//BackRCCW
+		}
+		previousMoveID=moveID;
+		
+	}
+	public boolean isSame(RubiksCube comparing){
+		boolean sameness=true;
+		if(comparing==null){
+			return false;
+		}
+		else{
+			for(int i=0;i<3;i++){
+				for(int j=0;j<3;j++){
+					if(!this.getFace(Color.BLUE)[i][j].equals(comparing.getFace(Color.BLUE)[i][j])
+					 ||!this.getFace(Color.WHITE)[i][j].equals(comparing.getFace(Color.WHITE)[i][j])
+					 ||this.getFace(Color.ORANGE)[i][j]!=comparing.getFace(Color.ORANGE)[i][j]
+					 ||this.getFace(Color.RED)[i][j]!=comparing.getFace(Color.RED)[i][j]
+					 ||this.getFace(Color.GREEN)[i][j]!=comparing.getFace(Color.GREEN)[i][j]
+					 ||this.getFace(Color.YELLOW)[i][j]!=comparing.getFace(Color.YELLOW)[i][j]){
+						sameness=false;
+					}
+				}
+			}
+		}
+		return sameness;
 	}
 }
