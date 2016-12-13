@@ -4,13 +4,21 @@ import cube.RubiksCube;
 public class Move {
 	private RubiksCube state;
 	private int score;
-	public Move(RubiksCube state,int score){
+	private int moveID;
+	public Move(RubiksCube state,int score,int moveID){
 		this.state=state;
 		this.score=score;
+		this.moveID=moveID;
+	}
+	public Move(RubiksCube state,int moveID){
+		this.state=state;
+		this.score=state.misplaced();
+		this.moveID=moveID;
 	}
 	public Move(RubiksCube state){
 		this.state=state;
 		this.score=state.misplaced();
+		this.moveID=-1;
 	}
 	public RubiksCube getState() {
 		return state;
@@ -21,5 +29,9 @@ public class Move {
 	public int getScore() {
 		return score;
 	}
+	public int getMoveID(){
+		return moveID;
+	}
+	
 	
 }
