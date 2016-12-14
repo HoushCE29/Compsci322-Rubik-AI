@@ -494,12 +494,12 @@ public class RubiksCube implements Cube, Cloneable{
 		else{
 			for(int i=0;i<3;i++){
 				for(int j=0;j<3;j++){
-					if(!this.getFace(Color.BLUE)[i][j].equals(comparing.getFace(Color.BLUE)[i][j])
-					 ||!this.getFace(Color.WHITE)[i][j].equals(comparing.getFace(Color.WHITE)[i][j])
-					 ||this.getFace(Color.ORANGE)[i][j]!=comparing.getFace(Color.ORANGE)[i][j]
-					 ||this.getFace(Color.RED)[i][j]!=comparing.getFace(Color.RED)[i][j]
-					 ||this.getFace(Color.GREEN)[i][j]!=comparing.getFace(Color.GREEN)[i][j]
-					 ||this.getFace(Color.YELLOW)[i][j]!=comparing.getFace(Color.YELLOW)[i][j]){
+					if((!this.getFace(Color.BLUE)[i][j].equals(comparing.getFace(Color.BLUE)[i][j]))
+					 ||(!this.getFace(Color.WHITE)[i][j].equals(comparing.getFace(Color.WHITE)[i][j]))
+					 ||(!this.getFace(Color.ORANGE)[i][j].equals(comparing.getFace(Color.ORANGE)[i][j]))
+					 ||(!this.getFace(Color.RED)[i][j].equals(comparing.getFace(Color.RED)[i][j]))
+					 ||(!this.getFace(Color.GREEN)[i][j].equals(comparing.getFace(Color.GREEN)[i][j]))
+					 ||(!this.getFace(Color.YELLOW)[i][j].equals(comparing.getFace(Color.YELLOW)[i][j]))){
 						sameness=false;
 					}
 				}
