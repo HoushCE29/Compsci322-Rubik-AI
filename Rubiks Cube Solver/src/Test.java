@@ -11,7 +11,7 @@ public class Test {
 		//int min=Integer.MAX_VALUE;
 		//Left Rotate Clockwise
 		int turn=0;
-		while(!rc.isSolved() && turn<20){
+		while(!rc.isSolved() && turn <20){
 			ArrayList <Move> moves=new ArrayList<Move>();
 			RubiksCube LRCW=rc.clone();
 			int move=-1;//integer representing the move the system will make
@@ -34,7 +34,7 @@ public class Test {
 			}*/
 			//Right Rotate Clockwise
 			RubiksCube RRCW=rc.clone();
-			RRCW.rotateLeft(Rotation.CLOCK);
+			RRCW.rotateRight(Rotation.CLOCK);
 			//int RRCWScore=RRCW.misplaced();
 			moves.add(new Move(RRCW,3));
 			/*if(RRCWScore<min){
@@ -43,7 +43,7 @@ public class Test {
 			}*/
 			//Right Rotate Counter-Clockwise
 			RubiksCube RRCCW=rc.clone();
-			RRCCW.rotateLeft(Rotation.COUNTER);
+			RRCCW.rotateRight(Rotation.COUNTER);
 			//int RRCCWScore=RRCCW.misplaced();
 			moves.add(new Move(RRCCW,4));
 			/*if(RRCCWScore<min){
@@ -52,7 +52,7 @@ public class Test {
 			}*/
 			//Top Rotate Clockwise
 			RubiksCube TRCW=rc.clone();
-			TRCW.rotateLeft(Rotation.CLOCK);
+			TRCW.rotateTop(Rotation.CLOCK);
 			//int TRCWScore=TRCW.misplaced();
 			moves.add(new Move(TRCW,5));
 			/*if(TRCWScore<min){
@@ -61,7 +61,7 @@ public class Test {
 			}*/
 			//Top Rotate Counter-Clockwise
 			RubiksCube TRCCW=rc.clone();
-			TRCCW.rotateLeft(Rotation.COUNTER);
+			TRCCW.rotateTop(Rotation.COUNTER);
 			//int TRCCWScore=TRCCW.misplaced();
 			moves.add(new Move(TRCCW,6));
 			/*if(TRCCWScore<min){
@@ -70,7 +70,7 @@ public class Test {
 			}*/
 			//Bottom Rotate Clockwise
 			RubiksCube BotRCW=rc.clone();
-			BotRCW.rotateLeft(Rotation.CLOCK);
+			BotRCW.rotateBottom(Rotation.CLOCK);
 			//int BotRCWScore=BotRCW.misplaced();
 			moves.add(new Move(BotRCW,7));
 			/*if(BotRCWScore<min){
@@ -79,7 +79,7 @@ public class Test {
 			}*/
 			//Bottom Rotate Counter-Clockwise
 			RubiksCube BotRCCW=rc.clone();
-			BotRCCW.rotateLeft(Rotation.COUNTER);
+			BotRCCW.rotateBottom(Rotation.COUNTER);
 			//int BotRCCWScore=BotRCCW.misplaced();
 			moves.add(new Move(BotRCCW,8));
 			/*if(BotRCCWScore<min){
@@ -88,7 +88,7 @@ public class Test {
 			}*/
 			//Front Rotate Clockwise
 			RubiksCube FRCW=rc.clone();
-			FRCW.rotateLeft(Rotation.COUNTER);
+			FRCW.rotateFront(Rotation.COUNTER);
 			//int FRCWScore=FRCW.misplaced();
 			moves.add(new Move(FRCW,9));
 			/*if(FRCWScore<min){
@@ -97,7 +97,7 @@ public class Test {
 			}*/
 			//Front Rotate Counter Clockwise
 			RubiksCube FRCCW=rc.clone();
-			FRCCW.rotateLeft(Rotation.COUNTER);
+			FRCCW.rotateFront(Rotation.COUNTER);
 			//int FRCCWScore=FRCCW.misplaced();
 			moves.add(new Move(FRCCW,10));
 			/*if(FRCCWScore<min){
@@ -106,7 +106,7 @@ public class Test {
 			}*/
 			//Back Rotate Clockwise
 			RubiksCube BackRCW=rc.clone();
-			BackRCW.rotateLeft(Rotation.COUNTER);
+			BackRCW.rotateBack(Rotation.COUNTER);
 			//int BackRCWScore=BackRCW.misplaced();
 			moves.add(new Move(BackRCW,11));
 			/*if(BackRCWScore<min){
@@ -115,7 +115,7 @@ public class Test {
 			}*/
 			//Back Rotate Counter Clockwise
 			RubiksCube BackRCCW=rc.clone();
-			BackRCCW.rotateLeft(Rotation.COUNTER);
+			BackRCCW.rotateBack(Rotation.COUNTER);
 			//int BackRCCWScore=BackRCCW.misplaced();
 			moves.add(new Move(BackRCCW,12));
 			/*if(BackRCCWScore<min){
@@ -127,7 +127,7 @@ public class Test {
 					Move temp=(Move)moves.get(i+1);
 					moves.set(i+1, (Move)moves.get(i));
 					moves.set(i,temp);
-					i=0;
+					i=-1;
 				}
 			}
 			for(int i=0;i<moves.size()-1;i++){
@@ -147,7 +147,7 @@ public class Test {
 			System.out.println("Move 9:"+FRCCWScore);
 			System.out.println("Move 10:"+BackRCWScore);
 			System.out.println("Move 11:"+BackRCCWScore);*/
-			
+			System.out.println("Previous move ID="+rc.getPreviousMoveID());
 			RubiksCube checkState;
 			int iterator=0;
 			do{
@@ -155,7 +155,10 @@ public class Test {
 				move=((Move)(moves.get(iterator))).getMoveID();
 				System.out.println("Evaluating Move " +move);
 				iterator++;
-			}while(((move==1 && rc.getPreviousMoveID()==2)||
+				System.out.println(checkState.isSame(rc.getPreviousState1()));
+				System.out.println(checkState.isSame(rc.getPreviousState2()));
+			}while(checkState.isSame(rc.getPreviousState1())||checkState.isSame(rc.getPreviousState2()));
+			/*while((((move==1 && rc.getPreviousMoveID()==2)||
 				   (move==2 && rc.getPreviousMoveID()==1)||
 				   (move==3 && rc.getPreviousMoveID()==4)||
 				   (move==4 && rc.getPreviousMoveID()==3)||
@@ -166,10 +169,11 @@ public class Test {
 				   (move==9 && rc.getPreviousMoveID()==10)||
 				   (move==10 && rc.getPreviousMoveID()==9)||
 				   (move==11 && rc.getPreviousMoveID()==12)||
-				   (move==12 && rc.getPreviousMoveID()==11)));
-				   //checkState.isSame(rc.getPreviousState1())||checkState.isSame(rc.getPreviousState2()));
+				   (move==12 && rc.getPreviousMoveID()==11)))&&
+				   (checkState.isSame(rc.getPreviousState1())||checkState.isSame(rc.getPreviousState2())));*/
 			//while();
 			System.out.println("Going with move "+move);
+			checkState.isSame(rc.getPreviousState1());
 			rc.move(move);
 			/*switch(move){
 				case 1:rc.rotateLeft(Rotation.CLOCK);break;//LRCW
