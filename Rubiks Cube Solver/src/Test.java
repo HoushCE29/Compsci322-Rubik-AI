@@ -8,10 +8,12 @@ public class Test {
 		RubiksCube rc = new RubiksCube(10);
 		System.out.println("Starting State:");
 		System.out.println(rc.toString());
+		System.out.print("Input number of moves: ");
+		int maxMoves = (new Scanner(System.in)).nextInt();
 		//int min=Integer.MAX_VALUE;
 		//Left Rotate Clockwise
 		int turn=0;
-		while(!rc.isSolved() && turn <20){
+		while(!rc.isSolved() && turn < maxMoves){
 			ArrayList <Move> moves=new ArrayList<Move>();
 			RubiksCube LRCW=rc.clone();
 			int move=-1;//integer representing the move the system will make
